@@ -1268,8 +1268,13 @@
             let html = `
                 <div class="question-number">Soal Nomor ${q.id}</div>
                 <div class="question-instruction">${q.instruction}</div>
-                <div class="question-text">${formatText(q.question)}</div>
             `;
+
+            if (q.type === "pg" || q.type === "complex") {
+                html += `
+                    <div class="question-text">${formatText(q.question)}</div>
+                `;
+            }
 
             if (q.type === "pg") {
                 html += `<div class="options-list">`;
