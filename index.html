@@ -205,17 +205,19 @@
             color: var(--text-main);
         }
 
-        .form-group input[type="text"] {
+        .form-group select {
             width: 100%;
             padding: 12px 16px;
             font-size: 1rem;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             outline: none;
+            background-color: #ffffff;
             transition: border-color 0.2s;
+            cursor: pointer;
         }
 
-        .form-group input[type="text"]:focus {
+        .form-group select:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
         }
@@ -756,12 +758,32 @@
         <section id="page-participant" class="page">
             <div class="card form-card">
                 <h2>DATA PESERTA</h2>
-                <p class="text-muted">Silakan masukkan nama lengkap Anda sebelum memulai ulangan.</p>
+                <p class="text-muted">Silakan pilih nama Anda sebelum memulai ulangan.</p>
                 
                 <div class="form-group">
-                    <label for="student-name">Nama Lengkap</label>
-                    <input type="text" id="student-name" placeholder="Masukkan nama lengkap" autocomplete="off">
-                    <span id="name-error" class="error-text">Silakan isi nama terlebih dahulu.</span>
+                    <label for="student-name">NAMA PESERTA</label>
+                    <select id="student-name">
+                        <option value="">Pilih nama Anda</option>
+                        <option value="AFSHEENA KHAIRUNISADRA">AFSHEENA KHAIRUNISADRA</option>
+                        <option value="BILQIS UFAIRA WIJAYA">BILQIS UFAIRA WIJAYA</option>
+                        <option value="DAFFA ARYA GHOSSAN">DAFFA ARYA GHOSSAN</option>
+                        <option value="HANIF ABBAD DINIKA">HANIF ABBAD DINIKA</option>
+                        <option value="JUNAIRAH TAMBUNAN">JUNAIRAH TAMBUNAN</option>
+                        <option value="KAYLA SYAFIQA PUTRI">KAYLA SYAFIQA PUTRI</option>
+                        <option value="KEYSHA QAIREEN AZZAKA">KEYSHA QAIREEN AZZAKA</option>
+                        <option value="M. AMMAR HAFIDZUL FURQON BASED">M. AMMAR HAFIDZUL FURQON BASED</option>
+                        <option value="M. B. M. AL-RASYID SIREGAR">M. B. M. AL-RASYID SIREGAR</option>
+                        <option value="M. DZAKA AL HAKIM">M. DZAKA AL HAKIM</option>
+                        <option value="MUHAMMAD QATAR">MUHAMMAD QATAR</option>
+                        <option value="NABIL NUR ARAYA">NABIL NUR ARAYA</option>
+                        <option value="NAURA AQILA NADHIFA">NAURA AQILA NADHIFA</option>
+                        <option value="NEVAN AHZA ANENDI">NEVAN AHZA ANENDI</option>
+                        <option value="NURUL AZIZAH AL-GASYAWARI">NURUL AZIZAH AL-GASYAWARI</option>
+                        <option value="QEYLA ADZKA NAFIISA">QEYLA ADZKA NAFIISA</option>
+                        <option value="RAISA NAHDA HASANAH EVVENDI">RAISA NAHDA HASANAH EVVENDI</option>
+                        <option value="VIOLLA TATA BUSANA">VIOLLA TATA BUSANA</option>
+                    </select>
+                    <span id="name-error" class="error-text">Silakan pilih nama Anda terlebih dahulu.</span>
                 </div>
 
                 <button id="btn-begin-exam" class="btn btn-primary">MULAI MENGERJAKAN</button>
@@ -1161,13 +1183,13 @@
             });
 
             document.getElementById("btn-begin-exam").addEventListener("click", () => {
-                const nameInput = document.getElementById("student-name");
+                const nameSelect = document.getElementById("student-name");
                 const errorSpan = document.getElementById("name-error");
-                const nameVal = nameInput.value.trim();
+                const nameVal = nameSelect.value;
 
                 if (nameVal === "") {
                     errorSpan.classList.add("show");
-                    nameInput.focus();
+                    nameSelect.focus();
                     return;
                 }
 
