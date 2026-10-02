@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulangan Harian - Pendidikan Pancasila Kelas VI B</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1d4ed8;
+            --primary-hover: #1e40af;
+            --primary-light: #eff6ff;
+            --accent-color: #3b82f6;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+            --warning-color: #d97706;
+            --radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 12px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        /* Page Control */
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card-hero {
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary-light) 100%);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+            padding: 36px 28px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .exam-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .card-hero h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .card-hero h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        /* Exam Info Grid */
+        .exam-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+            text-align: left;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            margin-right: 12px;
+        }
+
+        .info-item strong {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .info-item p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            text-align: center;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #d1d5db;
+        }
+
+        .btn-large {
+            width: 100%;
+            font-size: 1.1rem;
+            padding: 14px;
+        }
+
+        /* Form Group */
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+        }
+
+        .error-text {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-text.show {
+            display: block;
+        }
+
+        /* Exam Header & Progress */
+        .exam-header-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .exam-title-group h3 {
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .exam-title-group p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .student-info-badge {
+            background: var(--primary-light);
+            color: var(--primary-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid #bfdbfe;
+        }
+
+        .exam-progress-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .warning-inline {
+            color: var(--danger-color);
+            font-size: 0.85rem;
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            background-color: var(--border-color);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Question Area */
+        .question-card {
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .question-instruction {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 20px;
+        }
+
+        /* Options Styling */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+
+        .option-item:hover {
+            background-color: var(--primary-light);
+            border-color: #93c5fd;
+        }
+
+        .option-item input {
+            margin-right: 12px;
+            transform: scale(1.1);
+            accent-color: var(--primary-color);
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        /* True / False Table Styling */
+        .tf-table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 24px;
+        }
+
+        .tf-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .tf-table th, .tf-table td {
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .tf-table th {
+            background-color: var(--primary-light);
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .tf-table th:first-child {
+            text-align: left;
+        }
+
+        .tf-table td.text-center {
+            text-align: center;
+        }
+
+        .tf-table input[type="radio"] {
+            transform: scale(1.2);
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Exam Navigation Buttons */
+        .exam-navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        /* Palette Grid */
+        .palette-card h4 {
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+            gap: 8px;
+        }
+
+        .palette-btn {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: #ffffff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .palette-btn.unanswered {
+            background: #f1f5f9;
+            color: var(--text-muted);
+        }
+
+        .palette-btn.answered {
+            background: #dcfce7;
+            color: #15803d;
+            border-color: #86efac;
+        }
+
+        .palette-btn.current {
+            background: var(--primary-color);
+            color: #ffffff;
+            border-color: var(--primary-color);
+        }
+
+        /* Review Page */
+        .review-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .review-summary-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .summary-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary-label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .summary-item strong {
+            font-size: 1.5rem;
+        }
+
+        .text-success { color: var(--success-color); }
+        .text-danger { color: var(--danger-color); }
+
+        .alert-box {
+            background-color: #fef3c7;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+
+        .action-button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        /* Modal Confirmation */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 16px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: var(--radius);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .modal-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+        }
+
+        /* Result Card */
+        .result-card {
+            text-align: center;
+        }
+
+        .result-header-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        .result-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .result-identity {
+            margin: 16px 0;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .score-display-box {
+            background: var(--primary-light);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius);
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .score-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: uppercase;
+        }
+
+        .score-display-box h1 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin: 4px 0;
+        }
+
+        .score-max {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .result-breakdown {
+            text-align: left;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .result-breakdown h4 {
+            font-size: 0.95rem;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .result-breakdown ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .result-breakdown li {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .breakdown-total {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        /* Leaderboard Table */
+        .leaderboard-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .leaderboard-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .leaderboard-table th {
+            font-weight: 600;
+            color: var(--text-muted);
+            background-color: #f8fafc;
+        }
+
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .text-muted { color: var(--text-muted); }
+
+        @media (max-width: 600px) {
+            body { padding: 8px; }
+            .card, .card-hero { padding: 16px; }
+            .card-hero h1 { font-size: 1.5rem; }
+            .action-button-group, .modal-actions { flex-direction: column-reverse; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Utama Aplikasi -->
+    <div class="app-container">
+
+        <!-- ================= PAGE 1: BERANDA ================= -->
+        <section id="page-home" class="page active">
+            <div class="card-hero">
+                <div class="exam-badge">Ujian Digital Resmi</div>
+                <h1>ULANGAN HARIAN</h1>
+                <h2>PENDIDIKAN PANCASILA</h2>
+                <p class="subtitle">KELAS VI B – KELAS BUEL</p>
+                
+                <div class="exam-info-grid">
+                    <div class="info-item">
+                        <span class="info-icon">📝</span>
+                        <div>
+                            <strong>20 Soal</strong>
+                            <p>Pilihan Ganda, Kompleks, & B/S</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">📚</span>
+                        <div>
+                            <strong>3 Bentuk Soal</strong>
+                            <p>Uji Pemahaman Komprehensif</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">🎯</span>
+                        <div>
+                            <strong>Nilai Maksimal</strong>
+                            <p>100 Poin</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-start" class="btn btn-primary btn-large">MULAI ULANGAN</button>
+            </div>
+
+            <!-- Leaderboard Section di Beranda -->
+            <div class="card leaderboard-card">
+                <h3>🏆 PAPAN SKOR</h3>
+                <p class="leaderboard-desc">Daftar siswa yang telah menyelesaikan ulangan (Sinkronisasi Realtime)</p>
+                <div class="table-responsive">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Nama Siswa</th>
+                                <th class="text-right">Nilai</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">Memuat data papan skor...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: DATA PESERTA ================= -->
+        <section id="page-participant" class="page">
+            <div class="card form-card">
+                <h2>DATA PESERTA</h2>
+                <p class="text-muted">Silakan masukkan nama lengkap Anda sebelum memulai ulangan.</p>
+                
+                <div class="form-group">
+                    <label for="student-name">Nama Lengkap</label>
+                    <input type="text" id="student-name" placeholder="Masukkan nama lengkap" autocomplete="off">
+                    <span id="name-error" class="error-text">Silakan isi nama terlebih dahulu.</span>
+                </div>
+
+                <button id="btn-begin-exam" class="btn btn-primary">MULAI MENGERJAKAN</button>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: HALAMAN ULANGAN ================= -->
+        <section id="page-exam" class="page">
+            <div class="exam-header-card">
+                <div class="exam-title-group">
+                    <h3>ULANGAN HARIAN PENDIDIKAN PANCASILA</h3>
+                    <p>Kelas VI B – Kelas Buel</p>
+                </div>
+                <div class="student-info-badge">
+                    <span>Nama: <strong id="display-student-name">-</strong></span>
+                </div>
+            </div>
+
+            <div class="exam-progress-container">
+                <div class="progress-info">
+                    <span id="question-indicator">Soal 1 dari 20</span>
+                    <span id="score-warning" class="warning-inline"></span>
+                </div>
+                <div class="progress-bar-track">
+                    <div id="progress-bar-fill" class="progress-bar-fill" style="width: 5%;"></div>
+                </div>
+            </div>
+
+            <div class="card question-card">
+                <div id="question-content">
+                    <!-- Dinamis via JS -->
+                </div>
+
+                <div class="exam-navigation-buttons">
+                    <button id="btn-prev" class="btn btn-secondary">← Sebelumnya</button>
+                    <button id="btn-next" class="btn btn-primary">Berikutnya →</button>
+                </div>
+            </div>
+
+            <div class="card palette-card">
+                <h4>Nomor Soal</h4>
+                <div id="question-palette" class="palette-grid">
+                    <!-- Dinamis via JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: HALAMAN PEMERIKSAAN ================= -->
+        <section id="page-review" class="page">
+            <div class="card review-card">
+                <h2>PEMERIKSAAN JAWABAN</h2>
+                <p>Pastikan semua jawaban sudah diperiksa sebelum mengirim ulangan.</p>
+
+                <div class="review-summary-box">
+                    <div class="summary-item">
+                        <span class="summary-label">Soal Sudah Dijawab:</span>
+                        <strong id="summary-answered" class="text-success">0</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Soal Belum Dijawab:</span>
+                        <strong id="summary-unanswered" class="text-danger">0</strong>
+                    </div>
+                </div>
+
+                <div id="review-warning-box" class="alert-box">
+                    Masih ada <span id="unanswered-count-text">0</span> soal yang belum dijawab. Anda tetap dapat mengirimkan sekarang atau kembali melengkapi.
+                </div>
+
+                <div class="action-button-group">
+                    <button id="btn-back-to-exam" class="btn btn-secondary">← Kembali ke Soal</button>
+                    <button id="btn-submit-trigger" class="btn btn-primary">KIRIM JAWABAN</button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= MODAL KONFIRMASI ================= -->
+        <div id="modal-confirm" class="modal-overlay">
+            <div class="modal-card">
+                <h3>Konfirmasi Pengiriman</h3>
+                <p>Apakah kamu yakin ingin mengirim jawaban?</p>
+                <div class="modal-actions">
+                    <button id="btn-cancel-submit" class="btn btn-secondary">Belum, Periksa Lagi</button>
+                    <button id="btn-confirm-submit" class="btn btn-primary">Ya, Kirim Jawaban</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= PAGE 5: HALAMAN HASIL ================= -->
+        <section id="page-result" class="page">
+            <div class="card result-card">
+                <div class="result-header-icon">🎉</div>
+                <h2>ULANGAN SELESAI</h2>
+                <p class="subtitle">Hasil ujian Anda telah berhasil disimpan ke database online.</p>
+
+                <div class="result-identity">
+                    <p>Nama Peserta: <strong id="result-name">-</strong></p>
+                </div>
+
+                <div class="score-display-box">
+                    <span class="score-label">Nilai Akhir</span>
+                    <h1 id="result-final-score">0</h1>
+                    <span class="score-max">dari 100</span>
+                </div>
+
+                <div class="result-breakdown">
+                    <h4>Rincian Perolehan Nilai:</h4>
+                    <ul>
+                        <li><span>Pilihan Ganda (No. 1–12):</span> <strong id="breakdown-pg">0 / 48</strong></li>
+                        <li><span>Pilihan Ganda Kompleks (No. 13–16):</span> <strong id="breakdown-complex">0 / 32</strong></li>
+                        <li><span>Benar / Salah (No. 17–20):</span> <strong id="breakdown-bs">0 / 20</strong></li>
+                    </ul>
+                    <div class="breakdown-total">
+                        <span>Total Keseluruhan:</span> <strong id="breakdown-total">0 / 100</strong>
+                    </div>
+                </div>
+
+                <button id="btn-home-return" class="btn btn-primary">KEMBALI KE BERANDA</button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Script Aplikasi & Firebase Realtime Database -->
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyAUxpxPwiPgSQ-0v6SV1VEt5WD-Z-VPzgs",
+            authDomain: "ulangan-pancasila-kelas-6.firebaseapp.com",
+            databaseURL: "https://ulangan-pancasila-kelas-6-default-rtdb.firebaseio.com/",
+            projectId: "ulangan-pancasila-kelas-6",
+            storageBucket: "ulangan-pancasila-kelas-6.firebasestorage.app",
+            messagingSenderId: "690543541743",
+            appId: "1:690543541743:web:fe83f227963c4a57b2ca1a",
+            measurementId: "G-GVC14DMHRP"
+        };
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getDatabase, 
+            ref, 
+            push, 
+            onValue, 
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        let db = null;
+        let useFirebase = false;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            useFirebase = true;
+        } catch (e) {
+            console.warn("Gagal menginisialisasi Firebase Realtime Database, beralih ke local fallback.", e);
+        }
+
+        const questionsData = [
+            {
+                id: 1, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Pancasila disebut sebagai suatu kesatuan yang utuh karena ....",
+                options: [
+                    { key: "A", text: "setiap sila dapat dipilih sesuai keinginan" },
+                    { key: "B", text: "sila-sila Pancasila saling berhubungan dan tidak dapat dipisahkan" },
+                    { key: "C", text: "hanya sila tertentu yang harus diamalkan" },
+                    { key: "D", text: "setiap sila memiliki tujuan yang berbeda-beda" }
+                ],
+                answer: "B"
+            },
+            {
+                id: 2, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Pancasila sebagai dasar negara berarti ....",
+                options: [
+                    { key: "A", text: "Pancasila hanya digunakan dalam kegiatan sekolah" },
+                    { key: "B", text: "Pancasila menjadi dasar dan pedoman dalam penyelenggaraan negara" },
+                    { key: "C", text: "Pancasila hanya digunakan ketika upacara" },
+                    { key: "D", text: "Pancasila hanya mengatur hubungan antarsuku" }
+                ],
+                answer: "B"
+            },
+            {
+                id: 3, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Perhatikan kegiatan berikut!\n1. Menghargai teman yang berbeda agama.\n2. Menolong teman tanpa membeda-bedakan.\n3. Bermusyawarah untuk menentukan ketua kelas.\n4. Menghargai hasil keputusan bersama.\n\nKegiatan tersebut menunjukkan bahwa ....",
+                options: [
+                    { key: "A", text: "setiap sila Pancasila berdiri sendiri" },
+                    { key: "B", text: "hanya sila pertama yang penting" },
+                    { key: "C", text: "sila-sila Pancasila saling berkaitan dalam kehidupan sehari-hari" },
+                    { key: "D", text: "Pancasila hanya berkaitan dengan kehidupan bernegara" }
+                ],
+                answer: "C"
+            },
+            {
+                id: 4, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Jika sebuah peraturan yang dibuat bertentangan dengan nilai-nilai Pancasila, maka peraturan tersebut ....",
+                options: [
+                    { key: "A", text: "tetap harus dilaksanakan" },
+                    { key: "B", text: "hanya berlaku bagi sebagian masyarakat" },
+                    { key: "C", text: "boleh digunakan jika dibuat pemerintah" },
+                    { key: "D", text: "harus diperbaiki agar sesuai dengan Pancasila" }
+                ],
+                answer: "D"
+            },
+            {
+                id: 5, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Ketua kelas membuat aturan yang melarang siswa dari suku tertentu mengikuti kegiatan kelas. Sikap yang tepat adalah ....",
+                options: [
+                    { key: "A", text: "menerima aturan tersebut agar tidak terjadi masalah" },
+                    { key: "B", text: "diam saja supaya kelas tetap tenang" },
+                    { key: "C", text: "menolak aturan tersebut karena bertentangan dengan nilai Pancasila" },
+                    { key: "D", text: "membuat aturan baru tanpa persetujuan siapa pun" }
+                ],
+                answer: "C"
+            },
+            {
+                id: 6, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Sikap yang mencerminkan nilai Ketuhanan adalah ....",
+                options: [
+                    { key: "A", text: "menghargai kebebasan orang lain dalam beragama" },
+                    { key: "B", text: "memaksakan agama kepada teman" },
+                    { key: "C", text: "membeda-bedakan teman berdasarkan agamanya" },
+                    { key: "D", text: "melarang teman menjalankan ibadah" }
+                ],
+                answer: "A"
+            },
+            {
+                id: 7, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Perilaku yang mencerminkan nilai Kemanusiaan adalah ....",
+                options: [
+                    { key: "A", text: "membantu orang lain dengan tulus tanpa membeda-bedakan" },
+                    { key: "B", text: "memilih teman berdasarkan kekayaannya" },
+                    { key: "C", text: "mengejek teman yang berbeda" },
+                    { key: "D", text: "memaksakan kehendak kepada orang lain" }
+                ],
+                answer: "A"
+            },
+            {
+                id: 8, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Nilai Persatuan mengajarkan kita untuk ....",
+                options: [
+                    { key: "A", text: "mengutamakan kepentingan kelompok sendiri" },
+                    { key: "B", text: "menghargai perbedaan dan menjaga kebersamaan" },
+                    { key: "C", text: "menghindari orang yang berbeda budaya" },
+                    { key: "D", text: "memaksakan pendapat kepada orang lain" }
+                ],
+                answer: "B"
+            },
+            {
+                id: 9, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Dalam musyawarah, setiap orang sebaiknya ....",
+                options: [
+                    { key: "A", text: "memaksakan pendapatnya" },
+                    { key: "B", text: "tidak mau mendengarkan pendapat orang lain" },
+                    { key: "C", text: "memberi kesempatan kepada orang lain untuk berpendapat" },
+                    { key: "D", text: "meninggalkan musyawarah ketika pendapatnya tidak diterima" }
+                ],
+                answer: "C"
+            },
+            {
+                id: 10, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Nilai Keadilan dalam Pancasila mengajarkan bahwa ....",
+                options: [
+                    { key: "A", text: "keadilan hanya diberikan kepada orang tertentu" },
+                    { key: "B", text: "semua orang berhak mendapatkan perlakuan yang adil" },
+                    { key: "C", text: "orang yang kaya harus selalu didahulukan" },
+                    { key: "D", text: "kepentingan sebagian orang lebih penting daripada masyarakat" }
+                ],
+                answer: "B"
+            },
+            {
+                id: 11, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Etika sosial dan budaya mengajarkan kita untuk ....",
+                options: [
+                    { key: "A", text: "saling menghargai, memahami, peduli, dan menolong" },
+                    { key: "B", text: "mengutamakan kepentingan diri sendiri" },
+                    { key: "C", text: "mengabaikan budaya bangsa" },
+                    { key: "D", text: "membedakan teman berdasarkan latar belakangnya" }
+                ],
+                answer: "A"
+            },
+            {
+                id: 12, type: "pg",
+                instruction: "Pilihlah satu jawaban yang paling tepat!",
+                question: "Salah satu contoh penerapan nilai etika keilmuan dan disiplin kehidupan adalah ....",
+                options: [
+                    { key: "A", text: "malas mencari pengetahuan baru" },
+                    { key: "B", text: "menyebarkan informasi tanpa memeriksa kebenarannya" },
+                    { key: "C", text: "rajin belajar, berpikir kritis, dan mencari pengetahuan baru" },
+                    { key: "D", text: "menolak pendapat yang berbeda tanpa alasan" }
+                ],
+                answer: "C"
+            },
+            {
+                id: 13, type: "complex",
+                instruction: "Pilih semua jawaban yang benar!",
+                question: "Berikut yang menunjukkan hubungan antarsila Pancasila dalam kehidupan sehari-hari adalah ....",
+                options: [
+                    { key: "A", text: "Menghormati teman yang berbeda agama." },
+                    { key: "B", text: "Menolong teman tanpa pilih kasih." },
+                    { key: "C", text: "Bermusyawarah untuk menentukan ketua kelas." },
+                    { key: "D", text: "Menghargai hasil keputusan bersama." }
+                ],
+                answer: ["A", "B", "C", "D"]
+            },
+            {
+                id: 14, type: "complex",
+                instruction: "Pilih semua jawaban yang benar!",
+                question: "Pancasila sebagai pandangan hidup bangsa dapat diterapkan melalui tindakan ....",
+                options: [
+                    { key: "A", text: "Menjadikan nilai Pancasila sebagai pedoman bersikap." },
+                    { key: "B", text: "Bersikap baik dalam kehidupan bermasyarakat." },
+                    { key: "C", text: "Menghargai perbedaan dan menjaga persatuan." },
+                    { key: "D", text: "Mengabaikan nilai Pancasila ketika mengambil keputusan." }
+                ],
+                answer: ["A", "B", "C"]
+            },
+            {
+                id: 15, type: "complex",
+                instruction: "Pilih semua jawaban yang benar!",
+                question: "Yang termasuk kedudukan atau fungsi Pancasila bagi bangsa Indonesia adalah ....",
+                options: [
+                    { key: "A", text: "Dasar negara." },
+                    { key: "B", text: "Pandangan hidup bangsa." },
+                    { key: "C", text: "Sumber nilai dan pedoman dalam kehidupan." },
+                    { key: "D", text: "Alat untuk membeda-bedakan masyarakat." }
+                ],
+                answer: ["A", "B", "C"]
+            },
+            {
+                id: 16, type: "complex",
+                instruction: "Pilih semua jawaban yang benar!",
+                question: "Berikut yang termasuk bentuk etika kehidupan berdasarkan materi adalah ....",
+                options: [
+                    { key: "A", text: "Etika sosial dan budaya." },
+                    { key: "B", text: "Etika pemerintahan dan politik." },
+                    { key: "C", text: "Etika ekonomi dan bisnis." },
+                    { key: "D", text: "Etika penegakan hukum yang berkeadilan." },
+                    { key: "E", text: "Etika keilmuan dan disiplin kehidupan." }
+                ],
+                answer: ["A", "B", "C", "D", "E"]
+            },
+            {
+                id: 17, type: "tf",
+                instruction: "Berilah tanda centang pada kolom Benar atau Salah!",
+                statements: [
+                    { id: 1, text: "Sila-sila Pancasila saling berhubungan dan tidak dapat dipisahkan.", answer: "BENAR" }
+                ]
+            },
+            {
+                id: 18, type: "tf",
+                instruction: "Berilah tanda centang pada kolom Benar atau Salah!",
+                statements: [
+                    { id: 1, text: "Pancasila sebagai pandangan hidup bangsa dapat menjadi pedoman dalam bersikap dan bertingkah laku sehari-hari.", answer: "BENAR" }
+                ]
+            },
+            {
+                id: 19, type: "tf",
+                instruction: "Berilah tanda centang pada kolom Benar atau Salah!",
+                statements: [
+                    { id: 1, text: "Etika ekonomi dan bisnis mengajarkan kegiatan ekonomi dilakukan dengan jujur, adil, dan bertanggung jawab.", answer: "BENAR" }
+                ]
+            },
+            {
+                id: 20, type: "tf",
+                instruction: "Berilah tanda centang pada kolom Benar atau Salah!",
+                statements: [
+                    { id: 1, text: "Penegakan hukum yang berkeadilan berarti hukum boleh diterapkan berbeda kepada orang kaya dan orang miskin.", answer: "SALAH" }
+                ]
+            }
+        ];
+
+        let currentStudentName = "";
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let isSubmitting = false;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            initNavigation();
+            initRealtimeLeaderboard();
+        });
+
+        function initNavigation() {
+            document.getElementById("btn-start").addEventListener("click", () => {
+                switchPage("page-participant");
+            });
+
+            document.getElementById("btn-begin-exam").addEventListener("click", () => {
+                const nameInput = document.getElementById("student-name");
+                const errorSpan = document.getElementById("name-error");
+                const nameVal = nameInput.value.trim();
+
+                if (nameVal === "") {
+                    errorSpan.classList.add("show");
+                    nameInput.focus();
+                    return;
+                }
+
+                errorSpan.classList.remove("show");
+                currentStudentName = nameVal;
+                document.getElementById("display-student-name").textContent = currentStudentName;
+
+                switchPage("page-exam");
+                renderQuestion(currentQuestionIndex);
+                renderPalette();
+            });
+
+            document.getElementById("btn-prev").addEventListener("click", () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    renderQuestion(currentQuestionIndex);
+                    updatePaletteActive();
+                }
+            });
+
+            document.getElementById("btn-next").addEventListener("click", () => {
+                if (currentQuestionIndex < questionsData.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion(currentQuestionIndex);
+                    updatePaletteActive();
+                } else {
+                    prepareReviewPage();
+                    switchPage("page-review");
+                }
+            });
+
+            document.getElementById("btn-back-to-exam").addEventListener("click", () => {
+                switchPage("page-exam");
+                renderQuestion(currentQuestionIndex);
+            });
+
+            document.getElementById("btn-submit-trigger").addEventListener("click", () => {
+                document.getElementById("modal-confirm").classList.add("show");
+            });
+
+            document.getElementById("btn-cancel-submit").addEventListener("click", () => {
+                document.getElementById("modal-confirm").classList.remove("show");
+            });
+
+            document.getElementById("btn-confirm-submit").addEventListener("click", () => {
+                document.getElementById("modal-confirm").classList.remove("show");
+                submitExam();
+            });
+
+            document.getElementById("btn-home-return").addEventListener("click", () => {
+                resetApp();
+                switchPage("page-home");
+            });
+        }
+
+        function switchPage(pageId) {
+            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+            document.getElementById(pageId).classList.add("active");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderQuestion(index) {
+            const q = questionsData[index];
+            const container = document.getElementById("question-content");
+            
+            document.getElementById("question-indicator").textContent = `Soal ${index + 1} dari ${questionsData.length}`;
+            const progressPercent = ((index + 1) / questionsData.length) * 100;
+            document.getElementById("progress-bar-fill").style.width = `${progressPercent}%`;
+
+            const btnPrev = document.getElementById("btn-prev");
+            const btnNext = document.getElementById("btn-next");
+
+            btnPrev.style.display = index === 0 ? "none" : "inline-flex";
+            btnNext.textContent = index === questionsData.length - 1 ? "Selesai & Periksa →" : "Berikutnya →";
+
+            let html = `
+                <div class="question-number">Soal Nomor ${q.id}</div>
+                <div class="question-instruction">${q.instruction}</div>
+                <div class="question-text">${formatText(q.question)}</div>
+            `;
+
+            if (q.type === "pg") {
+                html += `<div class="options-list">`;
+                q.options.forEach(opt => {
+                    const checked = userAnswers[index] === opt.key ? "checked" : "";
+                    html += `
+                        <label class="option-item">
+                            <input type="radio" name="q_${index}" value="${opt.key}" ${checked} onchange="window.saveAnswer(${index}, '${opt.key}')">
+                            <span class="option-text"><strong>${opt.key}.</strong> ${opt.text}</span>
+                        </label>
+                    `;
+                });
+                html += `</div>`;
+            } 
+            else if (q.type === "complex") {
+                html += `<div class="options-list">`;
+                q.options.forEach(opt => {
+                    const selectedArr = userAnswers[index] || [];
+                    const checked = selectedArr.includes(opt.key) ? "checked" : "";
+                    html += `
+                        <label class="option-item">
+                            <input type="checkbox" name="q_${index}" value="${opt.key}" ${checked} onchange="window.saveComplexAnswer(${index})">
+                            <span class="option-text"><strong>${opt.key}.</strong> ${opt.text}</span>
+                        </label>
+                    `;
+                });
+                html += `</div>`;
+            } 
+            else if (q.type === "tf") {
+                html += `
+                    <div class="tf-table-wrapper">
+                        <table class="tf-table">
+                            <thead>
+                                <tr>
+                                    <th>Pernyataan</th>
+                                    <th class="text-center">BENAR</th>
+                                    <th class="text-center">SALAH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                q.statements.forEach(st => {
+                    const currentVal = userAnswers[index] || "";
+                    const checkedBenar = currentVal === "BENAR" ? "checked" : "";
+                    const checkedSalah = currentVal === "SALAH" ? "checked" : "";
+                    html += `
+                        <tr>
+                            <td>${st.text}</td>
+                            <td class="text-center">
+                                <input type="radio" name="tf_${index}" value="BENAR" ${checkedBenar} onchange="window.saveAnswer(${index}, 'BENAR')">
+                            </td>
+                            <td class="text-center">
+                                <input type="radio" name="tf_${index}" value="SALAH" ${checkedSalah} onchange="window.saveAnswer(${index}, 'SALAH')">
+                            </td>
+                        </tr>
+                    `;
+                });
+                html += `</tbody></table></div>`;
+            }
+
+            container.innerHTML = html;
+            document.getElementById("score-warning").textContent = "";
+        }
+
+        function formatText(text) {
+            return text.replace(/\n/g, '<br>');
+        }
+
+        window.saveAnswer = function(index, value) {
+            userAnswers[index] = value;
+            updatePaletteStatus();
+        };
+
+        window.saveComplexAnswer = function(index) {
+            const checkboxes = document.querySelectorAll(`input[name="q_${index}"]:checked`);
+            let selected = [];
+            checkboxes.forEach(cb => selected.push(cb.value));
+            userAnswers[index] = selected;
+            updatePaletteStatus();
+        };
+
+        function renderPalette() {
+            const paletteGrid = document.getElementById("question-palette");
+            let html = "";
+            for (let i = 0; i < questionsData.length; i++) {
+                let statusClass = isAnswered(i) ? "answered" : "unanswered";
+                if (i === currentQuestionIndex) statusClass += " current";
+                html += `<button class="palette-btn ${statusClass}" onclick="window.jumpToQuestion(${i})">${i + 1}</button>`;
+            }
+            paletteGrid.innerHTML = html;
+        }
+
+        function updatePaletteStatus() {
+            const buttons = document.querySelectorAll(".palette-grid .palette-btn");
+            buttons.forEach((btn, i) => {
+                btn.className = "palette-btn";
+                if (i === currentQuestionIndex) btn.classList.add("current");
+                else if (isAnswered(i)) btn.classList.add("answered");
+                else btn.classList.add("unanswered");
+            });
+        }
+
+        function updatePaletteActive() {
+            updatePaletteStatus();
+        }
+
+        window.jumpToQuestion = function(index) {
+            currentQuestionIndex = index;
+            renderQuestion(index);
+            updatePaletteStatus();
+        };
+
+        function isAnswered(index) {
+            const val = userAnswers[index];
+            if (val === undefined || val === null) return false;
+            if (Array.isArray(val) && val.length === 0) return false;
+            if (val === "") return false;
+            return true;
+        }
+
+        function prepareReviewPage() {
+            let answeredCount = 0;
+            let unansweredCount = 0;
+
+            for (let i = 0; i < questionsData.length; i++) {
+                if (isAnswered(i)) answeredCount++;
+                else unansweredCount++;
+            }
+
+            document.getElementById("summary-answered").textContent = answeredCount;
+            document.getElementById("summary-unanswered").textContent = unansweredCount;
+            document.getElementById("unanswered-count-text").textContent = unansweredCount;
+        }
+
+        // Fungsi submit asynchronous dengan pencegahan double submit dan penanganan error
+        async function submitExam() {
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            const submitBtn = document.getElementById("btn-confirm-submit");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Menyimpan...";
+
+            let scorePG = 0;
+            let scoreComplex = 0;
+            let scoreBS = 0;
+
+            questionsData.forEach((q, index) => {
+                const userAns = userAnswers[index];
+
+                if (q.type === "pg") {
+                    if (userAns === q.answer) {
+                        scorePG += 4;
+                    }
+                } 
+                else if (q.type === "complex") {
+                    if (Array.isArray(userAns)) {
+                        const correctSet = new Set(q.answer);
+                        const userSet = new Set(userAns);
+                        if (correctSet.size === userSet.size && [...correctSet].every(val => userSet.has(val))) {
+                            scoreComplex += 8;
+                        }
+                    }
+                } 
+                else if (q.type === "tf") {
+                    const correctAns = q.statements[0].answer;
+                    if (userAns === correctAns) {
+                        scoreBS += 5;
+                    }
+                }
+            });
+
+            const totalScore = scorePG + scoreComplex + scoreBS;
+
+            try {
+                // Simpan ke Realtime Database atau fallback localStorage
+                await saveResultToLeaderboard(currentStudentName, totalScore);
+
+                // Tampilkan hasil setelah berhasil tersimpan
+                document.getElementById("result-name").textContent = currentStudentName;
+                document.getElementById("result-final-score").textContent = totalScore;
+                document.getElementById("breakdown-pg").textContent = `${scorePG} / 48`;
+                document.getElementById("breakdown-complex").textContent = `${scoreComplex} / 32`;
+                document.getElementById("breakdown-bs").textContent = `${scoreBS} / 20`;
+                document.getElementById("breakdown-total").textContent = `${totalScore} / 100`;
+
+                switchPage("page-result");
+            } catch (error) {
+                console.error("Gagal menyimpan data ke Firebase Realtime Database:", error);
+                alert("Hasil ulangan belum berhasil disimpan ke database. Pastikan koneksi internet Anda aktif.");
+                isSubmitting = false;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Ya, Kirim Jawaban";
+            }
+        }
+
+        async function saveResultToLeaderboard(name, score) {
+            const record = {
+                name: name,
+                score: score,
+                timestamp: serverTimestamp()
+            };
+
+            if (useFirebase && db) {
+                const leaderboardRef = ref(db, "leaderboard");
+                await push(leaderboardRef, record);
+            } else {
+                // Fallback LocalStorage jika Firebase gagal terhubung
+                let localData = JSON.parse(localStorage.getItem("pancasila_leaderboard") || "[]");
+                localData.push({
+                    name: name,
+                    score: score,
+                    timestamp: Date.now()
+                });
+                localStorage.setItem("pancasila_leaderboard", JSON.stringify(localData));
+                loadLocalLeaderboard();
+            }
+        }
+
+        // Realtime Listener untuk Realtime Database
+        function initRealtimeLeaderboard() {
+            if (useFirebase && db) {
+                try {
+                    const leaderboardRef = ref(db, "leaderboard");
+                    onValue(leaderboardRef, (snapshot) => {
+                        const data = snapshot.val() || {};
+                        let list = Object.values(data);
+
+                        list.sort((a, b) => {
+                            if (b.score !== a.score) {
+                                return b.score - a.score;
+                            }
+                            // Tangani jika timestamp masih berupa placeholder objek khusus server dari Firebase
+                            let timeA = typeof a.timestamp === 'number' ? a.timestamp : 0;
+                            let timeB = typeof b.timestamp === 'number' ? b.timestamp : 0;
+                            return timeA - timeB;
+                        });
+
+                        renderLeaderboardTable(list);
+                    }, (error) => {
+                        console.error("Error membaca real-time database:", error);
+                        loadLocalLeaderboard();
+                    });
+                    return;
+                } catch (e) {
+                    console.error("Gagal inisialisasi real-time listener RTDB:", e);
+                }
+            }
+            loadLocalLeaderboard();
+        }
+
+        function loadLocalLeaderboard() {
+            let localData = JSON.parse(localStorage.getItem("pancasila_leaderboard") || "[]");
+            localData.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return (a.timestamp || 0) - (b.timestamp || 0);
+            });
+            renderLeaderboardTable(localData);
+        }
+
+        function renderLeaderboardTable(dataList) {
+            const tbody = document.getElementById("leaderboard-body");
+
+            if (!dataList || dataList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">Belum ada data peserta.</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            dataList.forEach((item, index) => {
+                let rankDisplay = `${index + 1}.`;
+                if (index === 0) rankDisplay = `🥇 1.`;
+                else if (index === 1) rankDisplay = `🥈 2.`;
+                else if (index === 2) rankDisplay = `🥉 3.`;
+
+                html += `
+                    <tr>
+                        <td>${rankDisplay}</td>
+                        <td><strong>${escapeHtml(item.name)}</strong></td>
+                        <td class="text-right"><strong>${item.score}</strong></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function escapeHtml(text) {
+            if (!text) return "";
+            const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        function resetApp() {
+            currentStudentName = "";
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            isSubmitting = false;
+            document.getElementById("student-name").value = "";
+        }
+    </script>
+</body>
+</html>
